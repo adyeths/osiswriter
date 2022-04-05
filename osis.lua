@@ -53,6 +53,7 @@ end
 -- to pandoc, and pandoc will do the template processing as usual.
 function Doc(body, metadata, variables)
   local buffer = {}
+  local hbuffer = {}
   local header = [[<?xml version="1.0" encoding="UTF-8"?>
 
 <osis xsi:schemaLocation="http://www.bibletechnologies.net/2003/OSIS/namespace
@@ -60,19 +61,6 @@ function Doc(body, metadata, variables)
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns="http://www.bibletechnologies.net/2003/OSIS/namespace">
 <osisText osisRefWork="GenBook" xml:lang="en" osisIDWork="WorkID">
-<header>
-
-<work osisWork="WorkID">
-<title>OSISGenbook</title>
-<creator role="aut">Author's Name</creator>
-</work>
-
-<work osisWork="Bible">
-<refSystem>Bible</refSystem>
-</work>
-
-</header>
-<div type="book" osisID="Book">
 ]]
   local footer = [[</div>
 </osisText>
@@ -81,9 +69,32 @@ function Doc(body, metadata, variables)
   local function add(s)
     table.insert(buffer, s)
   end
+
+  table.insert(hbuffer, '<header>\n<work osisWork="WorkID">')
+  if metadata.title then
+    table.insert(hbuffer, '<title>' .. metadata.title .. '</title>')
+  else
+    table.insert(hbuffer, '<title>OSISGenbook</title>')
+  end
+  if metadata.author then
+    table.insert(hbuffer, '<creator role="aut">' .. metadata.author .. '</creator>')
+  end
+  table.insert(hbuffer, [[</work>
+<work osisWork="Bible">
+<refSystem>Bible</refSystem>
+</work>
+</header>
+
+<div type="book" osisID="Book">
+]])
+
+
   add(header)
+  add(table.concat(hbuffer, "\n"))
   add(body)
   add(footer)
+
+
   return table.concat(buffer,'\n') .. '\n'
 end
 
