@@ -2,6 +2,10 @@
 -- Invoke with: pandoc -t osis.lua
 --
 
+-- This variable lets us add at least 1 level of chapter div in a document
+gotheader = false
+
+
 local pipe = pandoc.pipe
 local stringify = (require "pandoc.utils").stringify
 
@@ -92,6 +96,11 @@ function Doc(body, metadata, variables)
   add(header)
   add(table.concat(hbuffer, "\n"))
   add(body)
+
+  if gotheader == true then
+    add("</div>")
+  end
+
   add(footer)
 
 
@@ -212,7 +221,18 @@ end
 
 -- lev is an integer, the header level.
 function Header(lev, s, attr)
-  return '<title level="' .. lev .. '" type="main">' .. s .. '</title>'
+  if lev == 1 then
+    local oid = s
+    oid = string.gsub(oid, '[^%w ]', '')
+    if gotheader == true then
+      return '</div>\n<div type="chapter" osisID="' .. oid .. '">\n<title level="' .. lev .. '" type="main">' .. s .. '</title>'
+    else
+      gotheader = true
+      return '<div type="chapter" osisID="' .. oid .. '">\n<title level="' .. lev .. '" type="main">' .. s .. '</title>'
+    end
+  else
+    return '<title level="' .. lev .. '" type="main">' .. s .. '</title>'
+  end
 end
 
 function BlockQuote(s)
