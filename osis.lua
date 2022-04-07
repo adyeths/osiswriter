@@ -149,14 +149,15 @@ function SmallCaps(s)
 end
 
 function Strikeout(s)
-  return '<hi type="line-through">' .. s .. '</hil>'
+  return '<hi type="line-through">' .. s .. '</hi>'
+end
+
+function Underline(s)
+  return '<hi type="underline">' .. s .. '</hi>'
 end
 
 function Link(s, src, tit, attr)
-  -- TODO: Fix this so links work in osis
-  return s
-  -- return "<a href='" .. escape(src,true) .. "' title='" ..
-  --        escape(tit,true) .. "'>" .. s .. "</a>"
+  return "<a href='" .. escape(src,true) .. "' >" .. s .. "</a>"
 end
 
 function Image(s, src, tit, attr)
