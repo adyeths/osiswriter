@@ -240,13 +240,17 @@ function BlockQuote(s)
 end
 
 function HorizontalRule()
-  return ''
+  return '<milestone type="line" />'
 end
 
 function LineBlock(ls)
   local buffer = {}
   for _, item in pairs(ls) do
-    table.insert(buffer, "<l>" .. item .. "</l>")
+    if item == "" then
+      table.insert(buffer, "<lb />")
+    else
+      table.insert(buffer, "<l>" .. item .. "</l>")
+    end
   end
   return '<lg>\n' .. table.concat(buffer, '\n') .. '\n</lg>'
 end
@@ -295,9 +299,9 @@ function Table(caption, aligns, widths, headers, rows)
     table.insert(buffer, s)
   end
   add("<table>")
-  -- if caption ~= "" then
-  --   add("<caption>" .. caption .. "</caption>")
-  -- end
+  if caption ~= "" then
+    add("<head>" .. caption .. "</head>")
+  end
   if widths and widths[1] ~= 0 then
     for _, w in pairs(widths) do
       add('<cell />')
