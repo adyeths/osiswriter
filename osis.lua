@@ -260,7 +260,7 @@ function BulletList(items)
   for _, item in pairs(items) do
     table.insert(buffer, "<item>" .. item .. "</item>")
   end
-  return "<list>\n" .. table.concat(buffer, "\n") .. "\n</list>"
+  return '<list type="x-unordered">\n' .. table.concat(buffer, '\n') .. '\n</list>'
 end
 
 function OrderedList(items)
@@ -268,7 +268,7 @@ function OrderedList(items)
   for _, item in pairs(items) do
     table.insert(buffer, "<item>" .. item .. "</item>")
   end
-  return "<list>\n" .. table.concat(buffer, "\n") .. "\n</list>"
+  return '<list type="x-ordered">\n' .. table.concat(buffer, '\n') .. '\n</list>'
 end
 
 function DefinitionList(items)
@@ -278,7 +278,7 @@ function DefinitionList(items)
     table.insert(buffer, "<item><hi type='bold'>" .. k .. "</hi></item>\n<list><item>" ..
                    table.concat(v, "</item>\n<item>") .. "</item></list>")
   end
-  return "<list>\n" .. table.concat(buffer, "\n") .. "\n</list>"
+  return '<list type="x-definition">\n' .. table.concat(buffer, '\n') .. '\n</list>'
 end
 
 function CaptionedImage(src, tit, caption, attr)
