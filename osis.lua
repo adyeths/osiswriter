@@ -225,7 +225,7 @@ function Header(lev, s, attr)
   if lev == 1 then
     local oid = s
     oid = string.gsub(oid, '</?hi[^>]*>', '') -- remove hi tags from osisID
-    oid = string.gsub(oid, '<a href[^>]*>', '') -- remove links from osisID
+    oid = string.gsub(oid, '</?a[^>]*>', '') -- remove links from osisID
     oid = string.gsub(oid, '[^%w ]', '') -- remove non-alphanumeric chars from osisID
     if gotheader == true then
       return '</div>\n<div type="chapter" osisID="' .. oid .. '">\n<title level="' .. lev .. '" type="main">' .. s .. '</title>'
