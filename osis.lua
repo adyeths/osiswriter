@@ -228,13 +228,13 @@ function Header(lev, s, attr)
     oid = string.gsub(oid, '</?a[^>]*>', '') -- remove links from osisID
     oid = string.gsub(oid, '[^%w ]', '') -- remove non-alphanumeric chars from osisID
     if gotheader == true then
-      return '</div>\n<div type="chapter" osisID="' .. oid .. '">\n<title level="' .. lev .. '" type="main">' .. s .. '</title>'
+      return '</div>\n<div type="chapter" osisID="' .. oid .. '">\n<title level="' .. lev .. '" ID="' .. attr.id .. '" type="main">' .. s .. '</title>'
     else
       gotheader = true
       return '<div type="chapter" osisID="' .. oid .. '">\n<title level="' .. lev .. '" type="main">' .. s .. '</title>'
     end
   else
-    return '<title level="' .. lev .. '" type="main">' .. s .. '</title>'
+    return '<title level="' .. lev .. '" ID="' .. attr.id .. '" type="main">' .. s .. '</title>'
   end
 end
 
